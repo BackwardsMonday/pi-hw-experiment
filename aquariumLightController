@@ -1,0 +1,65 @@
+#! /usr/bin/python
+
+from gpiozero import LED
+from gpiozero import Button
+from gpiozero import PWMLED
+from time import sleep
+
+color = (200,1,100)
+fadeTimeS = 30
+R_LED = 25 # adapt to your wiring
+G_LED = 5
+B_LED = 26
+def fadeIn(time, rgb):
+# PWM1.py
+# LED dimming
+    rLed=PWMLED(R_LED)
+    gLed=PWMLED(G_LED)
+    bLed=PWMLED(B_LED)
+    print(max(rgb))
+    rFactor = round(max(rgb)/rgb[0])
+    rStep = (rgb[0]/255)/(max(rgb)/rFactor)
+    print (rFactor, " ", rStep)
+    gFactor= round(max(rgb)/rgb[1])
+    gStep = (rgb[1]/255)/(max(rgb)/gFactor)
+    bFactor= round(max(rgb)/rgb[2])
+    bStep = (rgb[2]/255)/(max(rgb)/bFactor)
+    for i in range(max(rgb)):
+        if not i%rFactor and rLed.value != rgb[0]:
+            rLed.value+=rStep
+        if not i%gFactor and gLed.value != rgb[1]:
+            gLed.value+=gStep
+        if not i%bFactor and bLed.value != rgb[2]:
+            bLed.value+=bStep
+        sleep(time/max(rgb))
+fadeIn(fadeTimeS, color)
+print("MAX")
+sleep(5)
+
+
+
+
+
+# def setup():
+#     global pwm
+#     GPIO.setmode(GPIO.BOARD)
+#     GPIO.setup(P_LED, GPIO.OUT)
+#     pwm = GPIO.PWM(P_LED, fPWM)
+#     pwm.start(0)
+    
+# print ("starting")
+# setup()
+# duty = 0
+# isIncreasing = True
+# while True:
+#     pwm.ChangeDutyCycle(duty)
+#     print ("D =", duty, "%")
+#     if isIncreasing:
+#         duty += 10
+#     else:
+#         duty -= 10
+#     if duty == 100:
+#         isIncreasing = False
+#     if duty == 0:
+#         isIncreasing = True
+#     time.sleep(1)
