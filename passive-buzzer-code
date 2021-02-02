@@ -1,0 +1,14 @@
+#! /usr/bin/python
+
+from gpiozero import TonalBuzzer
+from gpiozero.tones import Tone
+from gpiozero import Button
+from time import sleep
+
+buzzer = TonalBuzzer(17)
+button = Button(18)
+
+buzzer.play(Tone(60))
+sleep(1)
+buzzer.play(Tone(62))
+sleep(3)
